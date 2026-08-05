@@ -1,14 +1,10 @@
 import logging
 from datetime import datetime, timedelta
-from passlib.context import CryptContext
 from app.db.mongodb import db_manager
 from app.core.config import settings
+from app.core.security import hash_password
 
 logger = logging.getLogger("uvicorn")
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
 
 SAMPLE_MOVIES = [
     {
@@ -99,8 +95,7 @@ async def seed_database():
             for index, movie_id in enumerate(movie_ids):
                 for day_offset in range(1, 4):
                     show_date = now + timedelta(days=day_offset)
-                    # 2 showtimes per day
-                    for hour in [14, 19]: # 2:00 PM and 7:00 PM
+                    for hour in [14, 19]:
                         show_time_dt = show_date.replace(hour=hour, minute=0, second=0, microsecond=0)
                         sample_shows.append({
                             "movie_id": movie_id,
@@ -108,8 +103,8 @@ async def seed_database():
                             "show_time": show_time_dt.isoformat(),
                             "price_per_seat": 12.50 + (index * 2),
                             "total_seats": 60,
-                            "rows": 6,   # Rows A-F
-                            "cols": 10,  # Cols 1-10
+                            "rows": 6,
+                            "cols": 10,
                             "booked_seats": ["A1", "A2"] if hour == 19 else [],
                             "created_at": datetime.utcnow()
                         })
