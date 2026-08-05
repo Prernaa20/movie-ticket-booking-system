@@ -2,6 +2,8 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
+import MovieCatalogPage from './pages/movies/MovieCatalogPage';
+import MovieDetailsPage from './pages/movies/MovieDetailsPage';
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 import ProfilePage from './pages/auth/ProfilePage';
@@ -13,22 +15,8 @@ function App() {
       <Navbar />
       <main style={{ flex: 1 }}>
         <Routes>
-          <Route path="/" element={
-            <div className="container page-section" style={{ textAlign: 'center' }}>
-              <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: 'var(--primary)' }}>
-                CinePass Movie Booking System
-              </h1>
-              <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>
-                Authentication pages, Protected Routes, Navigation Bar & User Profile loaded cleanly.
-              </p>
-              <div style={{ display: 'inline-flex', gap: '1rem' }}>
-                <span className="badge badge-primary">JWT Auth</span>
-                <span className="badge badge-amber">Role-Based Access</span>
-                <span className="badge badge-success">Protected Routes</span>
-              </div>
-            </div>
-          } />
-
+          <Route path="/" element={<MovieCatalogPage />} />
+          <Route path="/movie/:id" element={<MovieDetailsPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/profile" element={
