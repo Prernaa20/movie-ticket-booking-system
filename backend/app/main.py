@@ -4,15 +4,14 @@ from contextlib import asynccontextmanager
 from app.core.config import settings
 from app.db.mongodb import connect_to_mongo, close_mongo_connection
 from app.db.seed import seed_database
+from app.api.v1.router import api_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Lifespan event handler managing MongoDB connections on startup and shutdown."""
-    # Startup: Connect to MongoDB Atlas & Seed data
     await connect_to_mongo()
     await seed_database()
     yield
-    # Shutdown: Close database connection
     await close_mongo_connection()
 
 app = FastAPI(
@@ -30,6 +29,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Mount API v1 Routers
+app.include_router(api_router, prefix="/api/v1")
 
 @app.get("/api/v1/health", tags=["Health Check"])
 async def health_check():
