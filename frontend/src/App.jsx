@@ -8,7 +8,8 @@ import SeatSelectorPage from './pages/booking/SeatSelectorPage';
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 import ProfilePage from './pages/auth/ProfilePage';
-import { ProtectedRoute } from './components/auth/ProtectedRoute';
+import AdminDashboardPage from './pages/admin/AdminDashboardPage';
+import { ProtectedRoute, AdminRoute } from './components/auth/ProtectedRoute';
 
 function App() {
   return (
@@ -34,6 +35,11 @@ function App() {
             <ProtectedRoute>
               <ProfilePage />
             </ProtectedRoute>
+          } />
+          <Route path="/admin" element={
+            <AdminRoute>
+              <AdminDashboardPage />
+            </AdminRoute>
           } />
         </Routes>
       </main>
