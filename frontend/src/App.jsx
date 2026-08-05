@@ -4,6 +4,7 @@ import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import MovieCatalogPage from './pages/movies/MovieCatalogPage';
 import MovieDetailsPage from './pages/movies/MovieDetailsPage';
+import SeatSelectorPage from './pages/booking/SeatSelectorPage';
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 import ProfilePage from './pages/auth/ProfilePage';
@@ -17,6 +18,11 @@ function App() {
         <Routes>
           <Route path="/" element={<MovieCatalogPage />} />
           <Route path="/movie/:id" element={<MovieDetailsPage />} />
+          <Route path="/booking/:showId" element={
+            <ProtectedRoute>
+              <SeatSelectorPage />
+            </ProtectedRoute>
+          } />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/profile" element={
