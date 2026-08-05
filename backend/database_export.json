@@ -1,0 +1,144 @@
+{
+  "project_name": "CinePass - Movie Ticket Booking System",
+  "exported_at": "2026-08-05T18:38:23.340084",
+  "database_name": "movie_booking_db",
+  "collections": {
+    "users": [
+      {
+        "_id": "65b9a101f82c019a2e3a1001",
+        "full_name": "System Admin",
+        "email": "admin@cinepass.com",
+        "hashed_password": "$2b$12$eImiTXuWVxfM37uY4JANjO5E/7Ea/5G9mJ0A/3O/3O3O3O3O3O3O",
+        "role": "admin",
+        "created_at": "2026-08-05T20:00:00.000Z"
+      },
+      {
+        "_id": "65b9a101f82c019a2e3a1002",
+        "full_name": "Demo Customer",
+        "email": "customer@example.com",
+        "hashed_password": "$2b$12$eImiTXuWVxfM37uY4JANjO5E/7Ea/5G9mJ0A/3O/3O3O3O3O3O3O",
+        "role": "user",
+        "created_at": "2026-08-05T20:05:00.000Z"
+      }
+    ],
+    "movies": [
+      {
+        "_id": "65b9a101f82c019a2e3a2001",
+        "title": "Interstellar",
+        "description": "When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.",
+        "genre": [
+          "Sci-Fi",
+          "Adventure",
+          "Drama"
+        ],
+        "duration_mins": 169,
+        "release_date": "2014-11-07",
+        "language": "English",
+        "poster_url": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&auto=format&fit=crop&q=80",
+        "rating": 8.7,
+        "is_active": true,
+        "created_at": "2026-08-05T20:00:00.000Z"
+      },
+      {
+        "_id": "65b9a101f82c019a2e3a2002",
+        "title": "Inception",
+        "description": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
+        "genre": [
+          "Sci-Fi",
+          "Action",
+          "Thriller"
+        ],
+        "duration_mins": 148,
+        "release_date": "2010-07-16",
+        "language": "English",
+        "poster_url": "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=800&auto=format&fit=crop&q=80",
+        "rating": 8.8,
+        "is_active": true,
+        "created_at": "2026-08-05T20:00:00.000Z"
+      },
+      {
+        "_id": "65b9a101f82c019a2e3a2003",
+        "title": "Oppenheimer",
+        "description": "The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb during World War II.",
+        "genre": [
+          "Biography",
+          "Drama",
+          "History"
+        ],
+        "duration_mins": 180,
+        "release_date": "2023-07-21",
+        "language": "English",
+        "poster_url": "https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?w=800&auto=format&fit=crop&q=80",
+        "rating": 8.9,
+        "is_active": true,
+        "created_at": "2026-08-05T20:00:00.000Z"
+      },
+      {
+        "_id": "65b9a101f82c019a2e3a2004",
+        "title": "Dune: Part Two",
+        "description": "Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family.",
+        "genre": [
+          "Action",
+          "Adventure",
+          "Sci-Fi"
+        ],
+        "duration_mins": 166,
+        "release_date": "2024-03-01",
+        "language": "English",
+        "poster_url": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop&q=80",
+        "rating": 8.6,
+        "is_active": true,
+        "created_at": "2026-08-05T20:00:00.000Z"
+      }
+    ],
+    "shows": [
+      {
+        "_id": "65b9a101f82c019a2e3a3001",
+        "movie_id": "65b9a101f82c019a2e3a2001",
+        "screen_name": "Screen 1 (IMAX)",
+        "show_time": "2026-08-06T19:00:00.000Z",
+        "price_per_seat": 12.5,
+        "total_seats": 60,
+        "rows": 6,
+        "cols": 10,
+        "booked_seats": [
+          "A1",
+          "A2",
+          "A5",
+          "A6"
+        ],
+        "created_at": "2026-08-05T20:00:00.000Z"
+      },
+      {
+        "_id": "65b9a101f82c019a2e3a3002",
+        "movie_id": "65b9a101f82c019a2e3a2002",
+        "screen_name": "Screen 2 (Dolby Atmos)",
+        "show_time": "2026-08-06T20:00:00.000Z",
+        "price_per_seat": 14.5,
+        "total_seats": 60,
+        "rows": 6,
+        "cols": 10,
+        "booked_seats": [
+          "B3",
+          "B4"
+        ],
+        "created_at": "2026-08-05T20:00:00.000Z"
+      }
+    ],
+    "bookings": [
+      {
+        "_id": "65b9a101f82c019a2e3a4001",
+        "booking_code": "CP-8F2A9C",
+        "user_id": "65b9a101f82c019a2e3a1002",
+        "show_id": "65b9a101f82c019a2e3a3001",
+        "seat_numbers": [
+          "A5",
+          "A6"
+        ],
+        "total_amount": 26.5,
+        "status": "CONFIRMED",
+        "created_at": "2026-08-05T20:30:00.000Z"
+      }
+    ]
+  }
+}
