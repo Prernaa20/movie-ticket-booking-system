@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, DollarSign, Ticket, Film, Calendar, Users, Plus, Edit, Trash2, CheckCircle } from 'lucide-react';
+import { Shield, DollarSign, Ticket, Film, Calendar, Users, Plus, Edit, Trash2, Mail, UserCheck } from 'lucide-react';
 import api from '../../services/api';
 import { useToast } from '../../context/ToastContext';
 import MovieModal from '../../components/admin/MovieModal';
@@ -9,8 +9,8 @@ const AdminDashboardPage = () => {
   const { showToast } = useToast();
   const [stats, setStats] = useState(null);
   const [movies, setMovies] = useState([]);
-  const [shows, setShows] = useState([]);
-  const [activeTab, setActiveTab] = useState('movies'); // 'movies' | 'shows' | 'bookings'
+  const [usersList, setUsersList] = useState([]);
+  const [activeTab, setActiveTab] = useState('movies'); // 'movies' | 'users' | 'bookings'
   const [loading, setLoading] = useState(true);
 
   // Modal controls
@@ -25,14 +25,16 @@ const AdminDashboardPage = () => {
   const fetchDashboardData = async () => {
     setLoading(true);
     try {
-      const [statsRes, moviesRes] = await Promise.all([
+      const [statsRes, moviesRes, usersRes] = await Promise.all([
         api.get('/admin/dashboard'),
         api.get('/movies?limit=100'),
+        api.get('/admin/users'),
       ]);
       setStats(statsRes.data);
       setMovies(moviesRes.data.items || []);
+      setUsersList(usersRes.data || []);
     } catch (error) {
-      console.error('Error fetching admin stats:', error);
+      console.error('Error fetching admin data:', error);
       showToast('Failed to load admin metrics.', 'error');
     } finally {
       setLoading(false);
@@ -66,7 +68,7 @@ const AdminDashboardPage = () => {
             </h1>
           </div>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-            System overview, revenue metrics, movie catalog management, and showtime scheduling
+            System overview, revenue metrics, movie catalog management, and registered user accounts
           </p>
         </div>
 
@@ -92,7 +94,7 @@ const AdminDashboardPage = () => {
       {stats && (
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))',
           gap: '1.25rem',
           marginBottom: '3rem',
         }}>
@@ -136,9 +138,9 @@ const AdminDashboardPage = () => {
             </div>
           </div>
 
-          <div className="card-glass" style={{ padding: '1.25rem' }}>
+          <div className="card-glass" style={{ padding: '1.25rem', cursor: 'pointer' }} onClick={() => setActiveTab('users')}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-              <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Users</span>
+              <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Registered Users</span>
               <Users size={20} color="#a78bfa" />
             </div>
             <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#fff' }}>
@@ -169,6 +171,22 @@ const AdminDashboardPage = () => {
           }}
         >
           Movie Catalog ({movies.length})
+        </button>
+
+        <button
+          onClick={() => setActiveTab('users')}
+          style={{
+            background: 'none',
+            border: 'none',
+            borderBottom: activeTab === 'users' ? '2px solid var(--primary)' : '2px solid transparent',
+            padding: '0.75rem 1.25rem',
+            color: activeTab === 'users' ? 'var(--primary)' : 'var(--text-muted)',
+            fontWeight: 700,
+            fontSize: '0.95rem',
+            cursor: 'pointer',
+          }}
+        >
+          User Accounts ({usersList.length})
         </button>
 
         <button
@@ -231,6 +249,54 @@ const AdminDashboardPage = () => {
                         <Trash2 size={14} />
                       </button>
                     </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* User Accounts Tab */}
+      {activeTab === 'users' && (
+        <div className="card-glass" style={{ overflowX: 'auto', padding: '1rem' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.9rem' }}>
+            <thead>
+              <tr style={{ borderBottom: '1px solid var(--border)', color: 'var(--text-muted)' }}>
+                <th style={{ padding: '1rem' }}>Full Name</th>
+                <th style={{ padding: '1rem' }}>Email Address</th>
+                <th style={{ padding: '1rem' }}>Account Role</th>
+                <th style={{ padding: '1rem' }}>Registered On</th>
+              </tr>
+            </thead>
+            <tbody>
+              {usersList.map((u) => (
+                <tr key={u.id} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.05)' }}>
+                  <td style={{ padding: '0.75rem 1rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '50%',
+                      background: u.role === 'admin' ? 'var(--accent)' : 'var(--primary)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '0.85rem',
+                      fontWeight: 700,
+                      color: '#fff',
+                    }}>
+                      {u.full_name.charAt(0).toUpperCase()}
+                    </div>
+                    {u.full_name}
+                  </td>
+                  <td style={{ padding: '0.75rem 1rem', color: 'var(--text-muted)' }}>{u.email}</td>
+                  <td style={{ padding: '0.75rem 1rem' }}>
+                    <span className={`badge ${u.role === 'admin' ? 'badge-amber' : 'badge-primary'}`}>
+                      {u.role.toUpperCase()}
+                    </span>
+                  </td>
+                  <td style={{ padding: '0.75rem 1rem', color: 'var(--text-muted)' }}>
+                    {new Date(u.created_at).toLocaleDateString()}
                   </td>
                 </tr>
               ))}
