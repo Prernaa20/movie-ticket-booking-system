@@ -62,7 +62,7 @@ const RazorpayPaymentModal = ({ show, selectedSeats, totalAmount, onPaymentSucce
               <span className="badge badge-amber" style={{ fontSize: '0.65rem' }}>TEST MODE</span>
             </div>
             <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.7)', marginTop: '2px' }}>
-              CinePass Cinemas • ${totalAmount.toFixed(2)}
+              CineMagic Cinemas • ${totalAmount.toFixed(2)}
             </div>
           </div>
           <button

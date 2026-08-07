@@ -138,7 +138,7 @@ const TicketReceiptModal = ({ booking, onClose }) => {
               <QrCode size={48} color="#000" />
               <div style={{ textAlign: 'left' }}>
                 <div>SCAN AT CINEMA ENTRY</div>
-                <div style={{ fontSize: '0.75rem', fontWeight: 500, color: '#666' }}>CinePass Digital Access</div>
+                <div style={{ fontSize: '0.75rem', fontWeight: 500, color: '#666' }}>CineMagic Digital Access</div>
               </div>
             </div>
           </div>

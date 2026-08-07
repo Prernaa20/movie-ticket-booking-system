@@ -54,7 +54,7 @@ const Navbar = () => {
             color: '#ffffff',
             letterSpacing: '-0.03em',
           }}>
-            Cine<span style={{ color: 'var(--primary)' }}>Pass</span>
+            Cine<span style={{ color: 'var(--primary)' }}>Magic</span>
           </span>
         </Link>
 
