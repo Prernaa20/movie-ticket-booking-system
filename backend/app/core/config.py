@@ -20,6 +20,10 @@ class Settings(BaseSettings):
     ADMIN_EMAIL: str = "admin@cinepass.com"
     ADMIN_PASSWORD: str = "AdminPassword123!"
 
+    # Razorpay Payment Gateway Credentials (Test Keys)
+    RAZORPAY_KEY_ID: str = "rzp_test_CinePassDemoKey123"
+    RAZORPAY_KEY_SECRET: str = "SecretCinePassRazorpayDemoSecret123"
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
