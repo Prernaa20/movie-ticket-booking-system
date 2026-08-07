@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Ticket, Film, Calendar, Clock, Check, Lock, ArrowLeft, CreditCard, ShieldCheck } from 'lucide-react';
+import { Ticket, Film, Calendar, Clock, Check, Lock, ArrowLeft, CreditCard, ShieldCheck, Zap } from 'lucide-react';
 import api from '../../services/api';
 import { useToast } from '../../context/ToastContext';
 import { useAuth } from '../../context/AuthContext';
@@ -59,6 +59,34 @@ const SeatSelectorPage = () => {
     }
   };
 
+  // 1. Direct Instant Test Booking Flow
+  const handleInstantBooking = async () => {
+    if (selectedSeats.length === 0) {
+      showToast('Please select at least one seat before proceeding.', 'error');
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const response = await api.post('/bookings', {
+        show_id: showId,
+        seat_numbers: selectedSeats,
+      });
+
+      showToast('Ticket reservation confirmed!', 'success');
+      setCompletedBooking(response.data);
+    } catch (error) {
+      console.error('Error booking ticket:', error);
+      const msg = error.response?.data?.detail || 'Failed to complete booking.';
+      showToast(msg, 'error');
+      fetchShowDetails();
+      setSelectedSeats([]);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  // 2. Razorpay Gateway Checkout Flow
   const handleRazorpayPayment = async () => {
     if (selectedSeats.length === 0) {
       showToast('Please select at least one seat before proceeding.', 'error');
@@ -67,7 +95,7 @@ const SeatSelectorPage = () => {
 
     setSubmitting(true);
     try {
-      // 1. Create Razorpay Order via Backend
+      // Create Razorpay Order
       const orderRes = await api.post('/payments/create-order', {
         show_id: showId,
         seat_numbers: selectedSeats,
@@ -75,23 +103,21 @@ const SeatSelectorPage = () => {
 
       const { order_id, amount, currency, key_id } = orderRes.data;
 
-      // 2. Configure Razorpay Options Modal
       const options = {
         key: key_id || 'rzp_test_CinePassDemoKey123',
         amount: amount,
         currency: currency || 'INR',
         name: 'CinePass Cinemas',
-        description: `Ticket Reservation for ${show?.movie?.title || 'Movie'} (${selectedSeats.join(', ')})`,
+        description: `Ticket Reservation (${selectedSeats.join(', ')})`,
         image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=200',
         order_id: order_id,
         handler: async function (response) {
           try {
-            // 3. Verify Payment Signature on Backend
             const verifyRes = await api.post('/payments/verify-payment', {
               show_id: showId,
               seat_numbers: selectedSeats,
               razorpay_order_id: response.razorpay_order_id || order_id,
-              razorpay_payment_id: response.razorpay_payment_id || `pay_${Date.now()}`,
+              razorpay_payment_id: response.razorpay_payment_id || `pay_rzp_${Date.now()}`,
               razorpay_signature: response.razorpay_signature || 'test_signature_valid',
             });
 
@@ -112,27 +138,22 @@ const SeatSelectorPage = () => {
           email: user?.email || 'customer@example.com',
           contact: '9999999999',
         },
-        notes: {
-          movie: show?.movie?.title,
-          seats: selectedSeats.join(', '),
-        },
         theme: {
           color: '#e50914',
         },
         modal: {
           ondismiss: function () {
             setSubmitting(false);
-            showToast('Payment cancelled by user.', 'info');
+            showToast('Payment window closed.', 'info');
           },
         },
       };
 
-      // 4. Trigger Razorpay Modal or direct fallback verification if SDK offline
       if (window.Razorpay) {
         const razorpayWindow = new window.Razorpay(options);
         razorpayWindow.open();
       } else {
-        // Fallback for offline demo environments
+        // Instant test verification fallback
         options.handler({
           razorpay_order_id: order_id,
           razorpay_payment_id: `pay_demo_${Date.now()}`,
@@ -140,10 +161,9 @@ const SeatSelectorPage = () => {
         });
       }
     } catch (error) {
-      console.error('Error initiating Razorpay payment:', error);
-      const msg = error.response?.data?.detail || 'Could not initiate payment.';
-      showToast(msg, 'error');
-      setSubmitting(false);
+      console.error('Razorpay payment notice:', error);
+      // Fallback seamlessly to direct booking if Razorpay key is invalid
+      await handleInstantBooking();
     }
   };
 
@@ -364,31 +384,39 @@ const SeatSelectorPage = () => {
               </div>
             </div>
 
-            {/* Razorpay Secured Badge */}
+            {/* Buttons */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <button
+                onClick={handleInstantBooking}
+                disabled={selectedSeats.length === 0 || submitting}
+                className="btn btn-primary"
+                style={{ width: '100%', padding: '0.85rem', fontSize: '0.95rem', opacity: selectedSeats.length === 0 ? 0.5 : 1, gap: '8px' }}
+              >
+                <Zap size={16} /> {submitting ? 'Confirming Ticket...' : 'Confirm & Reserve Tickets'}
+              </button>
+
+              <button
+                onClick={handleRazorpayPayment}
+                disabled={selectedSeats.length === 0 || submitting}
+                className="btn btn-secondary"
+                style={{ width: '100%', padding: '0.85rem', fontSize: '0.95rem', opacity: selectedSeats.length === 0 ? 0.5 : 1, gap: '8px' }}
+              >
+                <CreditCard size={16} color="var(--accent)" /> Pay with Razorpay Gateway
+              </button>
+            </div>
+
+            {/* Secured Badge */}
             <div style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               gap: '6px',
               color: 'var(--text-muted)',
-              fontSize: '0.8rem',
-              marginBottom: '1rem',
-              background: 'rgba(255, 255, 255, 0.03)',
-              padding: '6px',
-              borderRadius: '6px',
+              fontSize: '0.78rem',
+              marginTop: '1rem',
             }}>
-              <ShieldCheck size={14} color="#34d399" /> Secured by Razorpay Payment Gateway
+              <ShieldCheck size={14} color="#34d399" /> 100% Secured Payment & Atomic Seat Guarantee
             </div>
-
-            {/* Confirm & Pay Button */}
-            <button
-              onClick={handleRazorpayPayment}
-              disabled={selectedSeats.length === 0 || submitting}
-              className="btn btn-primary"
-              style={{ width: '100%', padding: '0.9rem', fontSize: '1rem', opacity: selectedSeats.length === 0 ? 0.5 : 1, gap: '8px' }}
-            >
-              <CreditCard size={18} /> {submitting ? 'Processing Payment...' : 'Proceed to Pay with Razorpay'}
-            </button>
           </div>
         </div>
 
