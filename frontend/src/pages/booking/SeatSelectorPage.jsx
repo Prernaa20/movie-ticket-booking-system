@@ -5,6 +5,7 @@ import api from '../../services/api';
 import { useToast } from '../../context/ToastContext';
 import { useAuth } from '../../context/AuthContext';
 import TicketReceiptModal from '../../components/booking/TicketReceiptModal';
+import RazorpayPaymentModal from '../../components/booking/RazorpayPaymentModal';
 
 const SeatSelectorPage = () => {
   const { showId } = useParams();
@@ -16,11 +17,11 @@ const SeatSelectorPage = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [showRazorpayModal, setShowRazorpayModal] = useState(false);
   const [completedBooking, setCompletedBooking] = useState(null);
 
   useEffect(() => {
     fetchShowDetails();
-    loadRazorpayScript();
   }, [showId]);
 
   const fetchShowDetails = async () => {
@@ -34,15 +35,6 @@ const SeatSelectorPage = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const loadRazorpayScript = () => {
-    if (document.getElementById('razorpay-checkout-sdk')) return;
-    const script = document.createElement('script');
-    script.id = 'razorpay-checkout-sdk';
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-    script.async = true;
-    document.body.appendChild(script);
   };
 
   const handleSeatClick = (seatId, isBooked) => {
@@ -59,7 +51,7 @@ const SeatSelectorPage = () => {
     }
   };
 
-  // 1. Direct Instant Test Booking Flow
+  // 1. Direct Instant Confirmation Flow
   const handleInstantBooking = async () => {
     if (selectedSeats.length === 0) {
       showToast('Please select at least one seat before proceeding.', 'error');
@@ -86,84 +78,39 @@ const SeatSelectorPage = () => {
     }
   };
 
-  // 2. Razorpay Gateway Checkout Flow
-  const handleRazorpayPayment = async () => {
+  // 2. Open Razorpay Gateway Checkout Modal
+  const handleOpenRazorpay = () => {
     if (selectedSeats.length === 0) {
       showToast('Please select at least one seat before proceeding.', 'error');
       return;
     }
+    setShowRazorpayModal(true);
+  };
 
+  // 3. Process Verified Razorpay Payment
+  const handleRazorpaySuccess = async (paymentData) => {
+    setShowRazorpayModal(false);
     setSubmitting(true);
+
     try {
-      // Create Razorpay Order
-      const orderRes = await api.post('/payments/create-order', {
+      const response = await api.post('/payments/verify-payment', {
         show_id: showId,
         seat_numbers: selectedSeats,
+        razorpay_order_id: paymentData.razorpay_order_id,
+        razorpay_payment_id: paymentData.razorpay_payment_id,
+        razorpay_signature: paymentData.razorpay_signature,
       });
 
-      const { order_id, amount, currency, key_id } = orderRes.data;
-
-      const options = {
-        key: key_id || 'rzp_test_CinePassDemoKey123',
-        amount: amount,
-        currency: currency || 'INR',
-        name: 'CinePass Cinemas',
-        description: `Ticket Reservation (${selectedSeats.join(', ')})`,
-        image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=200',
-        order_id: order_id,
-        handler: async function (response) {
-          try {
-            const verifyRes = await api.post('/payments/verify-payment', {
-              show_id: showId,
-              seat_numbers: selectedSeats,
-              razorpay_order_id: response.razorpay_order_id || order_id,
-              razorpay_payment_id: response.razorpay_payment_id || `pay_rzp_${Date.now()}`,
-              razorpay_signature: response.razorpay_signature || 'test_signature_valid',
-            });
-
-            showToast('Payment verified & Tickets booked successfully!', 'success');
-            setCompletedBooking(verifyRes.data);
-          } catch (verifyError) {
-            console.error('Payment verification error:', verifyError);
-            const msg = verifyError.response?.data?.detail || 'Payment verification failed.';
-            showToast(msg, 'error');
-            fetchShowDetails();
-            setSelectedSeats([]);
-          } finally {
-            setSubmitting(false);
-          }
-        },
-        prefill: {
-          name: user?.full_name || 'Customer Name',
-          email: user?.email || 'customer@example.com',
-          contact: '9999999999',
-        },
-        theme: {
-          color: '#e50914',
-        },
-        modal: {
-          ondismiss: function () {
-            setSubmitting(false);
-            showToast('Payment window closed.', 'info');
-          },
-        },
-      };
-
-      if (window.Razorpay) {
-        const razorpayWindow = new window.Razorpay(options);
-        razorpayWindow.open();
-      } else {
-        // Instant test verification fallback
-        options.handler({
-          razorpay_order_id: order_id,
-          razorpay_payment_id: `pay_demo_${Date.now()}`,
-          razorpay_signature: 'test_signature_valid',
-        });
-      }
+      showToast('Razorpay payment verified & Tickets booked!', 'success');
+      setCompletedBooking(response.data);
     } catch (error) {
-      console.error('Razorpay payment notice:', error);
-      // Fallback seamlessly to direct booking if Razorpay key is invalid
-      await handleInstantBooking();
+      console.error('Payment verification error:', error);
+      const msg = error.response?.data?.detail || 'Payment verification failed.';
+      showToast(msg, 'error');
+      fetchShowDetails();
+      setSelectedSeats([]);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -384,24 +331,24 @@ const SeatSelectorPage = () => {
               </div>
             </div>
 
-            {/* Buttons */}
+            {/* Checkout Buttons */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               <button
-                onClick={handleInstantBooking}
+                onClick={handleOpenRazorpay}
                 disabled={selectedSeats.length === 0 || submitting}
                 className="btn btn-primary"
                 style={{ width: '100%', padding: '0.85rem', fontSize: '0.95rem', opacity: selectedSeats.length === 0 ? 0.5 : 1, gap: '8px' }}
               >
-                <Zap size={16} /> {submitting ? 'Confirming Ticket...' : 'Confirm & Reserve Tickets'}
+                <CreditCard size={18} /> Pay with Razorpay Gateway
               </button>
 
               <button
-                onClick={handleRazorpayPayment}
+                onClick={handleInstantBooking}
                 disabled={selectedSeats.length === 0 || submitting}
                 className="btn btn-secondary"
                 style={{ width: '100%', padding: '0.85rem', fontSize: '0.95rem', opacity: selectedSeats.length === 0 ? 0.5 : 1, gap: '8px' }}
               >
-                <CreditCard size={16} color="var(--accent)" /> Pay with Razorpay Gateway
+                <Zap size={16} color="var(--accent)" /> {submitting ? 'Confirming...' : 'Instant Test Confirmation'}
               </button>
             </div>
 
@@ -422,7 +369,18 @@ const SeatSelectorPage = () => {
 
       </div>
 
-      {/* Ticket Receipt Modal */}
+      {/* Razorpay Interactive Modal */}
+      {showRazorpayModal && (
+        <RazorpayPaymentModal
+          show={show}
+          selectedSeats={selectedSeats}
+          totalAmount={totalAmount}
+          onPaymentSuccess={handleRazorpaySuccess}
+          onClose={() => setShowRazorpayModal(false)}
+        />
+      )}
+
+      {/* Digital Ticket Receipt Modal */}
       {completedBooking && (
         <TicketReceiptModal
           booking={completedBooking}
