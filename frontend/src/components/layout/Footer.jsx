@@ -27,7 +27,7 @@ const Footer = () => {
                 <Film size={20} color="#fff" />
               </div>
               <span style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', fontWeight: 700 }}>
-                Cine<span style={{ color: 'var(--primary)' }}>Magic</span>
+                Cine<span style={{ color: 'var(--primary)' }}>Pass</span>
               </span>
             </div>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.6 }}>
@@ -74,7 +74,7 @@ const Footer = () => {
           fontSize: '0.85rem',
           color: 'var(--text-muted)',
         }}>
-          <div>© {new Date().getFullYear()} CineMagic. All rights reserved.</div>
+          <div>© {new Date().getFullYear()} CinePass. All rights reserved.</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
             Built with <Heart size={14} color="var(--primary)" fill="var(--primary)" /> for Senior College Capstone Project
           </div>

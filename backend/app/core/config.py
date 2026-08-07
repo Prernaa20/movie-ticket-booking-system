@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import Optional
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "CineMagic - Movie Ticket Booking API"
+    PROJECT_NAME: str = "CinePass - Movie Ticket Booking API"
     ENVIRONMENT: str = "development"
     PORT: int = 8000
     

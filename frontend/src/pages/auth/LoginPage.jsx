@@ -70,7 +70,7 @@ const LoginPage = () => {
             Welcome Back
           </h2>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-            Sign in to access your CineMagic tickets & showtimes
+            Sign in to access your CinePass tickets & showtimes
           </p>
         </div>
 
