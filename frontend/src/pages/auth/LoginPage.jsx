@@ -39,17 +39,22 @@ const LoginPage = () => {
   };
 
   return (
-    <div style={{
+    <div className="ambient-glow-wrapper" style={{
       minHeight: 'calc(100vh - 70px)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       padding: '2rem 1rem',
     }}>
+      {/* Ambient Blurred Background Glowing Orbs */}
+      <div className="ambient-orb ambient-orb-1" />
+      <div className="ambient-orb ambient-orb-2" />
+      <div className="ambient-orb ambient-orb-3" />
+
       <div className="card-glass" style={{ width: '100%', maxWidth: '440px', padding: '2.5rem' }}>
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <div style={{
-            background: 'var(--primary)',
+            background: 'linear-gradient(135deg, var(--primary) 0%, #0284c7 100%)',
             width: '50px',
             height: '50px',
             borderRadius: '14px',

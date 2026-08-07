@@ -1,8 +1,8 @@
 :root {
   --bg-primary: #070e17;
   --bg-surface: #0f172a;
-  --bg-card: rgba(15, 23, 42, 0.8);
-  --bg-glass: rgba(14, 20, 36, 0.9);
+  --bg-card: rgba(15, 23, 42, 0.75);
+  --bg-glass: rgba(14, 20, 36, 0.85);
   --primary: #06b6d4;
   --primary-hover: #0891b2;
   --primary-glow: rgba(6, 182, 212, 0.4);
@@ -11,7 +11,7 @@
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
   --text-subtle: #64748b;
-  --border: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.12);
   --border-focus: rgba(6, 182, 212, 0.5);
   --radius-sm: 8px;
   --radius-md: 14px;
@@ -55,21 +55,82 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--primary);
 }
 
+/* Ambient Blurry Glow Background Canvas */
+.ambient-glow-wrapper {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(130px);
+  -webkit-filter: blur(130px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.65;
+  animation: pulseGlow 12s ease-in-out infinite alternate;
+}
+
+.ambient-orb-1 {
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.35) 0%, rgba(2, 132, 199, 0) 70%);
+  top: -120px;
+  left: -120px;
+}
+
+.ambient-orb-2 {
+  width: 650px;
+  height: 650px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(29, 78, 216, 0) 70%);
+  top: 15%;
+  right: -180px;
+  animation-delay: 3s;
+}
+
+.ambient-orb-3 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.22) 0%, rgba(217, 119, 6, 0) 70%);
+  bottom: 10%;
+  left: 25%;
+  animation-delay: 6s;
+}
+
+@keyframes pulseGlow {
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(1.15) translate(30px, -20px);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(0.95) translate(-20px, 30px);
+    opacity: 0.55;
+  }
+}
+
 /* Glassmorphism Card Utility */
 .card-glass {
+  position: relative;
+  z-index: 1;
   background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card-glass:hover {
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.25);
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8);
 }
 
 /* Button Utilities */
@@ -187,6 +248,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Layout Utilities */
 .container {
+  position: relative;
+  z-index: 1;
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 1.5rem;
