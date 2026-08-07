@@ -1,18 +1,18 @@
 :root {
-  --bg-primary: #090d16;
-  --bg-surface: #121826;
-  --bg-card: rgba(22, 28, 44, 0.75);
-  --bg-glass: rgba(15, 21, 35, 0.85);
-  --primary: #e50914;
-  --primary-hover: #ff1e27;
-  --primary-glow: rgba(229, 9, 20, 0.35);
+  --bg-primary: #070e17;
+  --bg-surface: #0f172a;
+  --bg-card: rgba(15, 23, 42, 0.8);
+  --bg-glass: rgba(14, 20, 36, 0.9);
+  --primary: #06b6d4;
+  --primary-hover: #0891b2;
+  --primary-glow: rgba(6, 182, 212, 0.4);
   --accent: #f59e0b;
   --accent-glow: rgba(245, 158, 11, 0.3);
-  --text-main: #f9fafb;
-  --text-muted: #9ca3af;
-  --text-subtle: #6b7280;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-subtle: #64748b;
   --border: rgba(255, 255, 255, 0.1);
-  --border-focus: rgba(229, 9, 20, 0.5);
+  --border-focus: rgba(6, 182, 212, 0.5);
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
@@ -90,14 +90,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary) 0%, #b90710 100%);
+  background: linear-gradient(135deg, #06b6d4 0%, #0284c7 100%);
   color: #fff;
-  box-shadow: 0 4px 20px var(--primary-glow);
+  box-shadow: 0 4px 20px rgba(6, 182, 212, 0.35);
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary) 100%);
-  box-shadow: 0 6px 25px rgba(229, 9, 20, 0.5);
+  background: linear-gradient(135deg, #0891b2 0%, #0369a1 100%);
+  box-shadow: 0 6px 25px rgba(6, 182, 212, 0.5);
   transform: translateY(-1px);
 }
 
@@ -136,9 +136,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .badge-primary {
-  background: rgba(229, 9, 20, 0.15);
-  color: #ff4d55;
-  border: 1px solid rgba(229, 9, 20, 0.3);
+  background: rgba(6, 182, 212, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(6, 182, 212, 0.3);
 }
 
 .badge-amber {
@@ -170,7 +170,7 @@ h1, h2, h3, h4, h5, h6 {
 .form-input {
   width: 100%;
   padding: 0.8rem 1rem;
-  background: rgba(15, 21, 35, 0.8);
+  background: rgba(15, 23, 42, 0.8);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   color: var(--text-main);
