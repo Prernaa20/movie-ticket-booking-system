@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Mail, Lock, Eye, EyeOff, Film, Shield, UserCheck } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, Film } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
 
@@ -38,22 +38,6 @@ const LoginPage = () => {
     }
   };
 
-  const handleDemoLogin = async (demoEmail, demoPassword) => {
-    setEmail(demoEmail);
-    setPassword(demoPassword);
-    setLoading(true);
-    try {
-      const userData = await login(demoEmail, demoPassword);
-      showToast(`Logged in as ${userData.full_name} (${userData.role.toUpperCase()})`, 'success');
-      navigate(from, { replace: true });
-    } catch (error) {
-      console.error('Demo login error:', error);
-      showToast('Demo login failed. Ensure database seed has executed.', 'error');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div style={{
       minHeight: 'calc(100vh - 70px)',
@@ -81,39 +65,8 @@ const LoginPage = () => {
             Welcome Back
           </h2>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-            Sign in to access your CinePass tickets & showtimes
+            Sign in to access your CineMagic tickets & showtimes
           </p>
-        </div>
-
-        {/* Demo Account Quick-Fill Buttons */}
-        <div style={{
-          background: 'rgba(255, 255, 255, 0.04)',
-          border: '1px solid var(--border)',
-          borderRadius: '10px',
-          padding: '0.875rem',
-          marginBottom: '1.5rem',
-        }}>
-          <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--accent)', textTransform: 'uppercase', marginBottom: '0.6rem' }}>
-            ⚡ Viva Demo Shortcuts
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-            <button
-              type="button"
-              onClick={() => handleDemoLogin('admin@cinepass.com', 'AdminPassword123!')}
-              className="btn btn-secondary"
-              style={{ padding: '6px 10px', fontSize: '0.75rem', gap: '4px' }}
-            >
-              <Shield size={12} color="var(--accent)" /> Admin Account
-            </button>
-            <button
-              type="button"
-              onClick={() => handleDemoLogin('customer@example.com', 'Password123!')}
-              className="btn btn-secondary"
-              style={{ padding: '6px 10px', fontSize: '0.75rem', gap: '4px' }}
-            >
-              <UserCheck size={12} color="var(--primary)" /> Demo Customer
-            </button>
-          </div>
         </div>
 
         <form onSubmit={handleSubmit}>
