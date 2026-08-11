@@ -332,7 +332,9 @@
       "total_seats": 60,
       "rows": 6,
       "cols": 10,
-      "booked_seats": [],
+      "booked_seats": [
+        "A6"
+      ],
       "created_at": {
         "$date": "2026-08-11T08:17:05.027000"
       },
@@ -695,6 +697,24 @@
       },
       "_id": {
         "$oid": "6a7ae8e2ceec5d008fdafa2d"
+      }
+    },
+    {
+      "booking_code": "CP-O3Y401",
+      "user_id": "6a7adac04d2fcc956a92874a",
+      "show_id": "6a7ada814d2fcc956a92873c",
+      "seat_numbers": [
+        "A6"
+      ],
+      "total_amount": 16.0,
+      "payment_id": "pay_rzp_9d2za64th1c",
+      "order_id": "order_rzp_ctjdzsj0px",
+      "status": "CONFIRMED",
+      "created_at": {
+        "$date": "2026-08-11T09:38:34.776000"
+      },
+      "_id": {
+        "$oid": "6a7aed9aceec5d008fdafa2e"
       }
     }
   ]

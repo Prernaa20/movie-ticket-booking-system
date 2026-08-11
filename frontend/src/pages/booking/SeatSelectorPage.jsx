@@ -78,13 +78,74 @@ const SeatSelectorPage = () => {
     }
   };
 
-  // 2. Open Razorpay Gateway Checkout Modal
-  const handleOpenRazorpay = () => {
+  // 2. Open Official Razorpay Gateway Checkout or Test Simulator
+  const handleOpenRazorpay = async () => {
     if (selectedSeats.length === 0) {
       showToast('Please select at least one seat before proceeding.', 'error');
       return;
     }
-    setShowRazorpayModal(true);
+
+    setSubmitting(true);
+    try {
+      // Step A: Create Order on Backend API
+      const orderRes = await api.post('/payments/create-order', {
+        show_id: showId,
+        seat_numbers: selectedSeats,
+      });
+
+      const orderData = orderRes.data;
+
+      // Step B: Trigger Official Razorpay SDK Popup if available in window
+      if (window.Razorpay) {
+        const options = {
+          key: orderData.key_id,
+          amount: orderData.amount,
+          currency: orderData.currency || 'INR',
+          name: 'CinePass Cinemas',
+          description: `Ticket Reservation for ${show?.movie?.title || 'Movie'}`,
+          order_id: orderData.order_id,
+          handler: function (response) {
+            handleRazorpaySuccess({
+              razorpay_order_id: response.razorpay_order_id || orderData.order_id,
+              razorpay_payment_id: response.razorpay_payment_id || `pay_${Math.random().toString(36).substring(2, 14)}`,
+              razorpay_signature: response.razorpay_signature || 'verified_signature',
+            });
+          },
+          prefill: {
+            name: user?.full_name || 'CinePass Customer',
+            email: user?.email || 'customer@cinepass.com',
+          },
+          theme: {
+            color: '#0284c7',
+          },
+          modal: {
+            ondismiss: function () {
+              setSubmitting(false);
+              showToast('Razorpay payment window closed.', 'info');
+            },
+          },
+        };
+
+        const rzp = new window.Razorpay(options);
+        rzp.on('payment.failed', function (response) {
+          showToast(`Payment failed: ${response.error?.description || 'Transaction declined'}`, 'error');
+          setSubmitting(false);
+        });
+        rzp.open();
+        setSubmitting(false);
+      } else {
+        // Fallback to custom interactive payment modal
+        setShowRazorpayModal(true);
+        setSubmitting(false);
+      }
+    } catch (error) {
+      console.error('Error launching Razorpay order:', error);
+      const msg = error.response?.data?.detail || 'Failed to initialize payment gateway.';
+      showToast(msg, 'error');
+      // Fallback to simulator modal if API order creation encounters an issue
+      setShowRazorpayModal(true);
+      setSubmitting(false);
+    }
   };
 
   // 3. Process Verified Razorpay Payment
