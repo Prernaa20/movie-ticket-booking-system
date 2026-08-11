@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CreditCard, QrCode, ShieldCheck, Lock, CheckCircle2, AlertCircle, X, Smartphone, Building } from 'lucide-react';
 
 const RazorpayPaymentModal = ({ show, selectedSeats, totalAmount, onPaymentSuccess, onClose }) => {
@@ -8,6 +8,14 @@ const RazorpayPaymentModal = ({ show, selectedSeats, totalAmount, onPaymentSucce
   const [expiry, setExpiry] = useState('12/28');
   const [cvv, setCvv] = useState('123');
   const [processing, setProcessing] = useState(false);
+
+  // Lock background body scroll when payment modal is active
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
 
   const handlePay = () => {
     setProcessing(true);
@@ -24,26 +32,28 @@ const RazorpayPaymentModal = ({ show, selectedSeats, totalAmount, onPaymentSucce
   return (
     <div style={{
       position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      background: 'rgba(0, 0, 0, 0.85)',
-      backdropFilter: 'blur(8px)',
+      inset: 0,
+      background: 'rgba(0, 0, 0, 0.94)',
+      backdropFilter: 'blur(16px)',
+      WebkitBackdropFilter: 'blur(16px)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       zIndex: 10000,
-      padding: '1rem',
+      padding: '1.5rem',
+      overflowY: 'auto',
     }}>
       <div style={{
-        background: '#0d131f',
+        background: '#090e17',
         border: '1px solid var(--border)',
         borderRadius: '16px',
         width: '100%',
         maxWidth: '460px',
-        overflow: 'hidden',
-        boxShadow: '0 20px 50px rgba(0,0,0,0.8)',
+        maxHeight: '88vh',
+        overflowY: 'auto',
+        boxShadow: '0 25px 60px rgba(0,0,0,0.95)',
+        position: 'relative',
+        zIndex: 10001,
       }}>
         {/* Header with Razorpay Logo branding */}
         <div style={{
@@ -167,7 +177,7 @@ const RazorpayPaymentModal = ({ show, selectedSeats, totalAmount, onPaymentSucce
               </label>
               <input
                 type="text"
-                className="input-field"
+                className="form-input"
                 value={upiId}
                 onChange={(e) => setUpiId(e.target.value)}
                 placeholder="e.g. name@upi or googlepay"
@@ -189,7 +199,7 @@ const RazorpayPaymentModal = ({ show, selectedSeats, totalAmount, onPaymentSucce
               </label>
               <input
                 type="text"
-                className="input-field"
+                className="form-input"
                 value={cardNumber}
                 onChange={(e) => setCardNumber(e.target.value)}
                 style={{ marginBottom: '0.75rem' }}
@@ -201,7 +211,7 @@ const RazorpayPaymentModal = ({ show, selectedSeats, totalAmount, onPaymentSucce
                   </label>
                   <input
                     type="text"
-                    className="input-field"
+                    className="form-input"
                     value={expiry}
                     onChange={(e) => setExpiry(e.target.value)}
                   />
@@ -212,7 +222,7 @@ const RazorpayPaymentModal = ({ show, selectedSeats, totalAmount, onPaymentSucce
                   </label>
                   <input
                     type="password"
-                    className="input-field"
+                    className="form-input"
                     value={cvv}
                     onChange={(e) => setCvv(e.target.value)}
                   />

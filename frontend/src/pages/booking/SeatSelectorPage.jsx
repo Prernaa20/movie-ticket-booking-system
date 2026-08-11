@@ -290,7 +290,7 @@ const SeatSelectorPage = () => {
 
         {/* Order Checkout Column */}
         <div>
-          <div className="card-glass" style={{ padding: '1.75rem', position: 'sticky', top: '90px' }}>
+          <div className="card-glass" style={{ padding: '1.75rem', position: 'sticky', top: '90px', alignSelf: 'start' }}>
             <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#fff', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <Ticket size={20} color="var(--primary)" /> Booking Summary
             </h3>

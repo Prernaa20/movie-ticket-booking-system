@@ -52,6 +52,20 @@ const MovieDetailsPage = () => {
     );
   }
 
+  const getEmbedTrailerUrl = (url) => {
+    if (!url) return 'https://www.youtube.com/embed/zSWdZVtXT7E?autoplay=1';
+    if (url.includes('embed/')) {
+      return url.includes('autoplay=1') ? url : `${url}${url.includes('?') ? '&' : '?'}autoplay=1`;
+    }
+    let videoId = 'zSWdZVtXT7E';
+    if (url.includes('v=')) {
+      videoId = url.split('v=')[1].split('&')[0];
+    } else if (url.includes('youtu.be/')) {
+      videoId = url.split('youtu.be/')[1].split('?')[0];
+    }
+    return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+  };
+
   return (
     <div>
       {/* Hero Backdrop Header */}
@@ -84,7 +98,7 @@ const MovieDetailsPage = () => {
             {/* Poster Card */}
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <img
-                src={movie.poster_url}
+                src={movie.poster_url || 'https://images.unsplash.com/photo-1534447677768-be436bb09401'}
                 alt={movie.title}
                 style={{
                   width: '240px',
@@ -93,6 +107,10 @@ const MovieDetailsPage = () => {
                   borderRadius: 'var(--radius-md)',
                   boxShadow: '0 20px 40px rgba(0, 0, 0, 0.8)',
                   border: '2px solid rgba(255, 255, 255, 0.15)',
+                }}
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = 'https://images.unsplash.com/photo-1534447677768-be436bb09401';
                 }}
               />
             </div>
@@ -215,9 +233,10 @@ const MovieDetailsPage = () => {
         <div style={{
           position: 'fixed',
           inset: 0,
-          zIndex: 9999,
-          background: 'rgba(0, 0, 0, 0.85)',
-          backdropFilter: 'blur(10px)',
+          zIndex: 10000,
+          background: 'rgba(0, 0, 0, 0.94)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -248,8 +267,8 @@ const MovieDetailsPage = () => {
             <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
               <iframe
                 style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
-                src="https://www.youtube.com/embed/zSWdZVtXT7E?autoplay=1"
-                title="Trailer Preview"
+                src={getEmbedTrailerUrl(movie.trailer_url)}
+                title={`${movie.title} Trailer Preview`}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />

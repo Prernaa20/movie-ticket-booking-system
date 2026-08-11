@@ -13,11 +13,20 @@ const MovieModal = ({ movie, onClose, onSuccess }) => {
     release_date: new Date().toISOString().split('T')[0],
     language: 'English',
     poster_url: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&auto=format&fit=crop&q=80',
+    trailer_url: 'https://www.youtube.com/watch?v=zSWdZVtXT7E',
     rating: 8.5,
     is_active: true,
   });
 
   const [loading, setLoading] = useState(false);
+
+  // Lock background body scroll when modal is open
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
 
   useEffect(() => {
     if (movie) {
@@ -29,6 +38,7 @@ const MovieModal = ({ movie, onClose, onSuccess }) => {
         release_date: movie.release_date || new Date().toISOString().split('T')[0],
         language: movie.language || 'English',
         poster_url: movie.poster_url || '',
+        trailer_url: movie.trailer_url || 'https://www.youtube.com/watch?v=zSWdZVtXT7E',
         rating: movie.rating || 8.5,
         is_active: movie.is_active !== undefined ? movie.is_active : true,
       });
@@ -85,7 +95,7 @@ const MovieModal = ({ movie, onClose, onSuccess }) => {
       justifyContent: 'center',
       padding: '1.5rem',
     }}>
-      <div className="card-glass" style={{ width: '100%', maxWidth: '580px', padding: '2rem', maxHeight: '90vh', overflowY: 'auto' }}>
+      <div className="card-glass" style={{ width: '100%', maxWidth: '580px', padding: '2rem', maxHeight: '90vh', overflowY: 'auto', background: '#090e17', position: 'relative', zIndex: 10001 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
           <h2 style={{ fontSize: '1.4rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '8px' }}>
             <Film color="var(--primary)" /> {movie ? 'Edit Movie Details' : 'Add New Movie to Catalog'}
@@ -180,15 +190,83 @@ const MovieModal = ({ movie, onClose, onSuccess }) => {
           </div>
 
           <div className="form-group">
-            <label className="form-label">HD Poster Image URL</label>
+            <label className="form-label">HD Poster Image URL or Local Path</label>
             <input
-              type="url"
+              type="text"
               name="poster_url"
               className="form-input"
               value={formData.poster_url}
               onChange={handleChange}
-              placeholder="https://images.unsplash.com/..."
+              placeholder="e.g. https://images.unsplash.com/... or /my_poster.jpg"
               required
+            />
+            {/* Poster Presets Picker */}
+            <div style={{ marginTop: '0.5rem' }}>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-subtle)', display: 'block', marginBottom: '0.35rem' }}>
+                Or select a preset high-resolution poster:
+              </span>
+              <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                <button
+                  type="button"
+                  onClick={() => setFormData((prev) => ({ ...prev, poster_url: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&auto=format&fit=crop&q=80' }))}
+                  className="btn btn-secondary"
+                  style={{ padding: '4px 8px', fontSize: '0.75rem' }}
+                >
+                  🌌 Sci-Fi
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setFormData((prev) => ({ ...prev, poster_url: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=800&auto=format&fit=crop&q=80' }))}
+                  className="btn btn-secondary"
+                  style={{ padding: '4px 8px', fontSize: '0.75rem' }}
+                >
+                  💥 Action
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setFormData((prev) => ({ ...prev, poster_url: 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?w=800&auto=format&fit=crop&q=80' }))}
+                  className="btn btn-secondary"
+                  style={{ padding: '4px 8px', fontSize: '0.75rem' }}
+                >
+                  🎭 Drama
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setFormData((prev) => ({ ...prev, poster_url: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop&q=80' }))}
+                  className="btn btn-secondary"
+                  style={{ padding: '4px 8px', fontSize: '0.75rem' }}
+                >
+                  🏜️ Fantasy
+                </button>
+              </div>
+            </div>
+
+            {/* Poster Live Preview */}
+            {formData.poster_url && (
+              <div style={{ marginTop: '0.75rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <img
+                  src={formData.poster_url}
+                  alt="Poster Preview"
+                  style={{ width: '45px', height: '60px', objectFit: 'cover', borderRadius: '6px', border: '1px solid var(--primary)' }}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&auto=format&fit=crop&q=80';
+                  }}
+                />
+                <span style={{ fontSize: '0.75rem', color: '#34d399' }}>✓ Poster Live Preview Ready</span>
+              </div>
+            )}
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">YouTube Trailer Video URL</label>
+            <input
+              type="url"
+              name="trailer_url"
+              className="form-input"
+              value={formData.trailer_url}
+              onChange={handleChange}
+              placeholder="https://www.youtube.com/watch?v=..."
             />
           </div>
 

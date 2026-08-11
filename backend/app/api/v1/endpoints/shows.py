@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import List
 from bson import ObjectId
 from fastapi import APIRouter, HTTPException, status, Depends
-from app.db.mongodb import db_manager
+from app.db.mongodb import db_manager, save_mock_db
 from app.schemas.show import ShowCreate, ShowResponse, ShowDetailResponse
 from app.schemas.movie import MovieResponse
 from app.api.deps import get_current_admin_user
@@ -54,6 +54,7 @@ async def create_show(
     
     result = await shows_col.insert_one(new_show)
     new_show["_id"] = result.inserted_id
+    await save_mock_db()
     
     return helper_show_dict(new_show)
 

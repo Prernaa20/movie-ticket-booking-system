@@ -28,6 +28,10 @@ const MovieCard = ({ movie }) => {
             objectFit: 'cover',
             transition: 'transform 0.5s ease',
           }}
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = 'https://images.unsplash.com/photo-1534447677768-be436bb09401';
+          }}
           onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.08)')}
           onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1.0)')}
         />

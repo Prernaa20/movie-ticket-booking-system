@@ -1,7 +1,7 @@
 from datetime import datetime
 from fastapi import APIRouter, HTTPException, status, Depends
 from fastapi.security import OAuth2PasswordRequestForm
-from app.db.mongodb import db_manager
+from app.db.mongodb import db_manager, save_mock_db
 from app.schemas.user import UserCreate, UserLogin, UserResponse, Token
 from app.core.security import hash_password, verify_password, create_access_token
 from app.api.deps import get_current_user
@@ -33,6 +33,7 @@ async def register_user(user_in: UserCreate):
     # 3. Save to database
     result = await users_col.insert_one(new_user)
     user_id = str(result.inserted_id)
+    await save_mock_db()
     
     # 4. Generate JWT access token
     access_token = create_access_token(subject=user_in.email.lower(), role="user")

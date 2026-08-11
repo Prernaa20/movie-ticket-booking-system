@@ -10,6 +10,7 @@ class MovieBase(BaseModel):
     release_date: str = Field(..., example="2014-11-07")
     language: str = Field(..., example="English")
     poster_url: str = Field(..., example="https://images.unsplash.com/photo-1534447677768-be436bb09401")
+    trailer_url: Optional[str] = Field("https://www.youtube.com/watch?v=zSWdZVtXT7E", example="https://www.youtube.com/watch?v=zSWdZVtXT7E")
     rating: float = Field(..., ge=0.0, le=10.0, example=8.7)
     is_active: bool = True
 
@@ -24,6 +25,7 @@ class MovieUpdate(BaseModel):
     release_date: Optional[str] = None
     language: Optional[str] = None
     poster_url: Optional[str] = None
+    trailer_url: Optional[str] = None
     rating: Optional[float] = None
     is_active: Optional[bool] = None
 

@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import List
 from bson import ObjectId
 from fastapi import APIRouter, HTTPException, status, Depends
-from app.db.mongodb import db_manager
+from app.db.mongodb import db_manager, save_mock_db
 from app.schemas.booking import BookingCreate, BookingResponse
 from app.api.deps import get_current_user
 
@@ -123,6 +123,7 @@ async def create_booking(
     
     result = await bookings_col.insert_one(new_booking)
     new_booking["_id"] = result.inserted_id
+    await save_mock_db()
     
     return await enrich_booking_details(new_booking)
 

@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Ticket, CheckCircle, Calendar, Clock, MapPin, Printer, ArrowRight, QrCode } from 'lucide-react';
 
 const TicketReceiptModal = ({ booking, onClose }) => {
   const navigate = useNavigate();
+
+  // Lock background body scroll when modal is active
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
 
   if (!booking) return null;
 
@@ -15,23 +23,27 @@ const TicketReceiptModal = ({ booking, onClose }) => {
     <div style={{
       position: 'fixed',
       inset: 0,
-      zIndex: 9999,
-      background: 'rgba(0, 0, 0, 0.85)',
-      backdropFilter: 'blur(12px)',
+      zIndex: 10000,
+      background: 'rgba(0, 0, 0, 0.94)',
+      backdropFilter: 'blur(16px)',
+      WebkitBackdropFilter: 'blur(16px)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       padding: '1.5rem',
-      animation: 'fadeIn 0.3s ease',
+      overflowY: 'auto',
     }}>
       <div style={{
-        background: 'var(--bg-surface)',
+        background: '#090e17',
         border: '1px solid var(--border)',
         borderRadius: '24px',
         maxWidth: '480px',
         width: '100%',
-        overflow: 'hidden',
-        boxShadow: '0 25px 60px rgba(0, 0, 0, 0.9)',
+        maxHeight: '88vh',
+        overflowY: 'auto',
+        boxShadow: '0 25px 60px rgba(0, 0, 0, 0.95)',
+        position: 'relative',
+        zIndex: 10001,
       }}>
         {/* Ticket Header Banner */}
         <div style={{

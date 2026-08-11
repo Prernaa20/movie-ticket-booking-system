@@ -17,6 +17,14 @@ const ShowModal = ({ onClose, onSuccess }) => {
 
   const [loading, setLoading] = useState(false);
 
+  // Lock background body scroll when modal is open
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
   useEffect(() => {
     fetchMoviesList();
   }, []);
@@ -80,7 +88,7 @@ const ShowModal = ({ onClose, onSuccess }) => {
       justifyContent: 'center',
       padding: '1.5rem',
     }}>
-      <div className="card-glass" style={{ width: '100%', maxWidth: '520px', padding: '2rem' }}>
+      <div className="card-glass" style={{ width: '100%', maxWidth: '520px', padding: '2rem', background: '#090e17', position: 'relative', zIndex: 10001 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
           <h2 style={{ fontSize: '1.4rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '8px' }}>
             <Calendar color="var(--accent)" /> Schedule New Showtime

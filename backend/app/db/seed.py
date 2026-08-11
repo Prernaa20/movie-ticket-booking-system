@@ -1,6 +1,6 @@
 import logging
 from datetime import datetime, timedelta
-from app.db.mongodb import db_manager
+from app.db.mongodb import db_manager, save_mock_db
 from app.core.config import settings
 from app.core.security import hash_password
 
@@ -112,6 +112,8 @@ async def seed_database():
             if sample_shows:
                 await shows_col.insert_many(sample_shows)
                 logger.info(f"Seeded {len(sample_shows)} sample showtimes across screens.")
+        
+        await save_mock_db()
 
     except Exception as e:
         logger.error(f"Error seeding database: {e}")

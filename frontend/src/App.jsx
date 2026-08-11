@@ -15,7 +15,7 @@ function App() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Navbar />
-      <main style={{ flex: 1 }}>
+      <main style={{ flex: 1, position: 'relative', zIndex: 1 }}>
         <Routes>
           <Route path="/" element={<MovieCatalogPage />} />
           <Route path="/movie/:id" element={<MovieDetailsPage />} />

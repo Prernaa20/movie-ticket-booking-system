@@ -21,12 +21,12 @@ const Navbar = () => {
 
   return (
     <nav style={{
-      background: 'rgba(9, 13, 22, 0.85)',
-      backdropFilter: 'blur(16px)',
+      background: '#070e17',
       borderBottom: '1px solid var(--border)',
       position: 'sticky',
       top: 0,
       zIndex: 1000,
+      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.8)',
     }}>
       <div className="container" style={{
         display: 'flex',

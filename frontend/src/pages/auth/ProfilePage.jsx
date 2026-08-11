@@ -64,11 +64,11 @@ const ProfilePage = () => {
               margin: '0 auto 1.5rem auto',
               boxShadow: `0 10px 25px ${isAdmin ? 'var(--accent-glow)' : 'var(--primary-glow)'}`,
             }}>
-              {user.full_name.charAt(0).toUpperCase()}
+              {(user.full_name || user.email || 'User').charAt(0).toUpperCase()}
             </div>
 
             <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#fff', marginBottom: '0.25rem' }}>
-              {user.full_name}
+              {user.full_name || user.email || 'User'}
             </h2>
             
             <div style={{ marginBottom: '1.5rem' }}>

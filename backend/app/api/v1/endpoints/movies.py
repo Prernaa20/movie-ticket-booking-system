@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import Optional
 from bson import ObjectId
 from fastapi import APIRouter, HTTPException, status, Query, Depends
-from app.db.mongodb import db_manager
+from app.db.mongodb import db_manager, save_mock_db
 from app.schemas.movie import MovieCreate, MovieUpdate, MovieResponse, PaginatedMovieResponse
 from app.api.deps import get_current_admin_user
 
@@ -20,6 +20,7 @@ def helper_movie_dict(movie: dict) -> MovieResponse:
         release_date=movie.get("release_date", ""),
         language=movie.get("language", "English"),
         poster_url=movie.get("poster_url", ""),
+        trailer_url=movie.get("trailer_url", "https://www.youtube.com/watch?v=zSWdZVtXT7E"),
         rating=movie.get("rating", 0.0),
         is_active=movie.get("is_active", True),
         created_at=movie.get("created_at", datetime.utcnow())
@@ -31,7 +32,7 @@ async def list_movies(
     genre: Optional[str] = Query(None, description="Filter by movie genre (e.g. Sci-Fi)"),
     language: Optional[str] = Query(None, description="Filter by audio language (e.g. English)"),
     page: int = Query(1, ge=1, description="Page number starting at 1"),
-    limit: int = Query(8, ge=1, le=50, description="Items per page")
+    limit: int = Query(8, ge=1, le=200, description="Items per page")
 ):
     """Browse catalog of movies with search, multi-filter, and pagination."""
     movies_col = db_manager.db["movies"]
@@ -98,6 +99,7 @@ async def create_movie(
     
     result = await movies_col.insert_one(new_movie)
     new_movie["_id"] = result.inserted_id
+    await save_mock_db()
     
     return helper_movie_dict(new_movie)
 
@@ -134,6 +136,7 @@ async def update_movie(
             detail="Movie not found."
         )
         
+    await save_mock_db()
     return helper_movie_dict(result)
 
 @router.delete("/{movie_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -160,4 +163,5 @@ async def delete_movie(
         
     # Also delete associated shows for cleanliness
     await shows_col.delete_many({"movie_id": movie_id})
+    await save_mock_db()
     return None

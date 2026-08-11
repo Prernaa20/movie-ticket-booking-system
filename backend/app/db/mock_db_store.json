@@ -1,0 +1,701 @@
+{
+  "users": [
+    {
+      "full_name": "System Admin",
+      "email": "admin@cinepass.com",
+      "hashed_password": "$2b$12$uwur98sy4LAtrHLZobTP5ONRwnbNpN0pDEFsIBbb1kolxLcOfPzQq",
+      "role": "admin",
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.025000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a92872d"
+      }
+    },
+    {
+      "full_name": "Prerna",
+      "email": "agrawalprerna2005@gmail.com",
+      "hashed_password": "$2b$12$rLH3CX5AlssM3ZfPIJ5jr.eOLAPxsF5idfkTvp.F/o40X7gmiSLBW",
+      "role": "user",
+      "created_at": {
+        "$date": "2026-08-11T08:18:08.472000"
+      },
+      "_id": {
+        "$oid": "6a7adac04d2fcc956a92874a"
+      }
+    },
+    {
+      "full_name": "vivek",
+      "email": "vt981042@gmail.com",
+      "hashed_password": "$2b$12$.FewmGM4NWJF25vEtTTXzex0eJiRlsCXY7eV2qNoif/n/TlM9jHFK",
+      "role": "user",
+      "created_at": {
+        "$date": "2026-08-11T08:20:32.328000"
+      },
+      "_id": {
+        "$oid": "6a7adb504d2fcc956a92874c"
+      }
+    }
+  ],
+  "movies": [
+    {
+      "title": "Interstellar",
+      "description": "When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.",
+      "genre": [
+        "Sci-Fi",
+        "Adventure",
+        "Drama"
+      ],
+      "duration_mins": 169,
+      "release_date": "2014-11-07",
+      "language": "English",
+      "poster_url": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&auto=format&fit=crop&q=80",
+      "rating": 8.7,
+      "is_active": true,
+      "created_at": {
+        "$date": "2026-08-11T08:17:04.375000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a92872e"
+      }
+    },
+    {
+      "title": "Inception",
+      "description": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project.",
+      "genre": [
+        "Sci-Fi",
+        "Action",
+        "Thriller"
+      ],
+      "duration_mins": 148,
+      "release_date": "2010-07-16",
+      "language": "English",
+      "poster_url": "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=800&auto=format&fit=crop&q=80",
+      "rating": 8.8,
+      "is_active": true,
+      "created_at": {
+        "$date": "2026-08-11T08:17:04.375000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a92872f"
+      }
+    },
+    {
+      "title": "Oppenheimer",
+      "description": "The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb during World War II.",
+      "genre": [
+        "Biography",
+        "Drama",
+        "History"
+      ],
+      "duration_mins": 180,
+      "release_date": "2023-07-21",
+      "language": "English",
+      "poster_url": "https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?w=800&auto=format&fit=crop&q=80",
+      "rating": 8.9,
+      "is_active": true,
+      "created_at": {
+        "$date": "2026-08-11T08:17:04.375000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a928730"
+      }
+    },
+    {
+      "title": "Dune: Part Two",
+      "description": "Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family.",
+      "genre": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ],
+      "duration_mins": 166,
+      "release_date": "2024-03-01",
+      "language": "English",
+      "poster_url": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop&q=80",
+      "rating": 8.6,
+      "is_active": true,
+      "created_at": {
+        "$date": "2026-08-11T08:17:04.375000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a928731"
+      }
+    },
+    {
+      "title": "Spider-Man: Brand New Day",
+      "description": "Peter Parker lives alone as Spider-Man in a world that no longer remembers him. As he continues fighting crime, a dangerous transformation and a powerful new threat put the city and the people he loves at risk.",
+      "genre": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ],
+      "duration_mins": 145,
+      "release_date": "2026-08-11",
+      "language": "English",
+      "poster_url": "https://i.pinimg.com/736x/b6/05/0e/b6050ef2d569681460a68a15c82ead4d.jpg",
+      "trailer_url": "https://www.youtube.com/watch?v=62bIsvRcPv0",
+      "rating": 8.2,
+      "is_active": true,
+      "created_at": {
+        "$date": "2026-08-11T08:55:01.109000"
+      },
+      "_id": {
+        "$oid": "6a7ae365a67431542fad0e07"
+      }
+    }
+  ],
+  "shows": [
+    {
+      "movie_id": "6a7ada814d2fcc956a92872e",
+      "screen_name": "Screen 1 (IMAX)",
+      "show_time": "2026-08-12T14:00:00",
+      "price_per_seat": 12.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [
+        "A7",
+        "A6"
+      ],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a928732"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a92872e",
+      "screen_name": "Screen 1 (IMAX)",
+      "show_time": "2026-08-12T19:00:00",
+      "price_per_seat": 12.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [
+        "A1",
+        "A2"
+      ],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a928733"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a92872e",
+      "screen_name": "Screen 1 (IMAX)",
+      "show_time": "2026-08-13T14:00:00",
+      "price_per_seat": 12.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a928734"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a92872e",
+      "screen_name": "Screen 1 (IMAX)",
+      "show_time": "2026-08-13T19:00:00",
+      "price_per_seat": 12.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [
+        "A1",
+        "A2"
+      ],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a928735"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a92872e",
+      "screen_name": "Screen 1 (IMAX)",
+      "show_time": "2026-08-14T14:00:00",
+      "price_per_seat": 12.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a928736"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a92872e",
+      "screen_name": "Screen 1 (IMAX)",
+      "show_time": "2026-08-14T19:00:00",
+      "price_per_seat": 12.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [
+        "A1",
+        "A2"
+      ],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a928737"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a92872f",
+      "screen_name": "Screen 2 (Dolby Atmos)",
+      "show_time": "2026-08-12T14:00:00",
+      "price_per_seat": 14.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a928738"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a92872f",
+      "screen_name": "Screen 2 (Dolby Atmos)",
+      "show_time": "2026-08-12T19:00:00",
+      "price_per_seat": 14.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [
+        "A1",
+        "A2"
+      ],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a928739"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a92872f",
+      "screen_name": "Screen 2 (Dolby Atmos)",
+      "show_time": "2026-08-13T14:00:00",
+      "price_per_seat": 14.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a92873a"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a92872f",
+      "screen_name": "Screen 2 (Dolby Atmos)",
+      "show_time": "2026-08-13T19:00:00",
+      "price_per_seat": 14.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [
+        "A1",
+        "A2"
+      ],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a92873b"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a92872f",
+      "screen_name": "Screen 2 (Dolby Atmos)",
+      "show_time": "2026-08-14T14:00:00",
+      "price_per_seat": 14.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a92873c"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a92872f",
+      "screen_name": "Screen 2 (Dolby Atmos)",
+      "show_time": "2026-08-14T19:00:00",
+      "price_per_seat": 14.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [
+        "A1",
+        "A2"
+      ],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a92873d"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a928730",
+      "screen_name": "Screen 3 (4DX)",
+      "show_time": "2026-08-12T14:00:00",
+      "price_per_seat": 16.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a92873e"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a928730",
+      "screen_name": "Screen 3 (4DX)",
+      "show_time": "2026-08-12T19:00:00",
+      "price_per_seat": 16.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [
+        "A1",
+        "A2"
+      ],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a92873f"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a928730",
+      "screen_name": "Screen 3 (4DX)",
+      "show_time": "2026-08-13T14:00:00",
+      "price_per_seat": 16.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a928740"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a928730",
+      "screen_name": "Screen 3 (4DX)",
+      "show_time": "2026-08-13T19:00:00",
+      "price_per_seat": 16.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [
+        "A1",
+        "A2"
+      ],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a928741"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a928730",
+      "screen_name": "Screen 3 (4DX)",
+      "show_time": "2026-08-14T14:00:00",
+      "price_per_seat": 16.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a928742"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a928730",
+      "screen_name": "Screen 3 (4DX)",
+      "show_time": "2026-08-14T19:00:00",
+      "price_per_seat": 16.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [
+        "A1",
+        "A2"
+      ],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a928743"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a928731",
+      "screen_name": "Screen 1 (IMAX)",
+      "show_time": "2026-08-12T14:00:00",
+      "price_per_seat": 18.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a928744"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a928731",
+      "screen_name": "Screen 1 (IMAX)",
+      "show_time": "2026-08-12T19:00:00",
+      "price_per_seat": 18.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [
+        "A1",
+        "A2"
+      ],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a928745"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a928731",
+      "screen_name": "Screen 1 (IMAX)",
+      "show_time": "2026-08-13T14:00:00",
+      "price_per_seat": 18.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a928746"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a928731",
+      "screen_name": "Screen 1 (IMAX)",
+      "show_time": "2026-08-13T19:00:00",
+      "price_per_seat": 18.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [
+        "A1",
+        "A2"
+      ],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a928747"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a928731",
+      "screen_name": "Screen 1 (IMAX)",
+      "show_time": "2026-08-14T14:00:00",
+      "price_per_seat": 18.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a928748"
+      }
+    },
+    {
+      "movie_id": "6a7ada814d2fcc956a928731",
+      "screen_name": "Screen 1 (IMAX)",
+      "show_time": "2026-08-14T19:00:00",
+      "price_per_seat": 18.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [
+        "A1",
+        "A2"
+      ],
+      "created_at": {
+        "$date": "2026-08-11T08:17:05.027000"
+      },
+      "_id": {
+        "$oid": "6a7ada814d2fcc956a928749"
+      }
+    },
+    {
+      "movie_id": "6a7ae365a67431542fad0e07",
+      "screen_name": "Screen 1 (IMAX)",
+      "show_time": "2026-08-12T08:55",
+      "price_per_seat": 12.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [],
+      "created_at": {
+        "$date": "2026-08-11T08:55:46.124000"
+      },
+      "_id": {
+        "$oid": "6a7ae392a67431542fad0e08"
+      }
+    },
+    {
+      "movie_id": "6a7ae365a67431542fad0e07",
+      "screen_name": "Screen 1 (IMAX)",
+      "show_time": "2026-08-12T10:00",
+      "price_per_seat": 12.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [],
+      "created_at": {
+        "$date": "2026-08-11T08:56:55.770000"
+      },
+      "_id": {
+        "$oid": "6a7ae3d7a67431542fad0e09"
+      }
+    },
+    {
+      "movie_id": "6a7ae365a67431542fad0e07",
+      "screen_name": "Screen 1 (IMAX)",
+      "show_time": "2026-08-13T09:14",
+      "price_per_seat": 12.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [],
+      "created_at": {
+        "$date": "2026-08-11T09:15:10.517000"
+      },
+      "_id": {
+        "$oid": "6a7ae81eceec5d008fdafa2a"
+      }
+    },
+    {
+      "movie_id": "6a7ae365a67431542fad0e07",
+      "screen_name": "Screen 1 (IMAX)",
+      "show_time": "2026-08-14T09:15",
+      "price_per_seat": 12.5,
+      "total_seats": 60,
+      "rows": 6,
+      "cols": 10,
+      "booked_seats": [
+        "A6",
+        "A7",
+        "A8",
+        "A10"
+      ],
+      "created_at": {
+        "$date": "2026-08-11T09:15:19.835000"
+      },
+      "_id": {
+        "$oid": "6a7ae827ceec5d008fdafa2b"
+      }
+    }
+  ],
+  "bookings": [
+    {
+      "booking_code": "CP-PU28EW",
+      "user_id": "6a7adac04d2fcc956a92874a",
+      "show_id": "6a7ada814d2fcc956a928732",
+      "seat_numbers": [
+        "A7",
+        "A6"
+      ],
+      "total_amount": 26.5,
+      "payment_id": "pay_rzp_cswyxgt3tac",
+      "order_id": "order_rzp_yuzfupiq5f",
+      "status": "CONFIRMED",
+      "created_at": {
+        "$date": "2026-08-11T08:18:27.295000"
+      },
+      "_id": {
+        "$oid": "6a7adad34d2fcc956a92874b"
+      }
+    },
+    {
+      "booking_code": "CP-6CRMKX",
+      "user_id": "6a7ada814d2fcc956a92872d",
+      "show_id": "6a7ae827ceec5d008fdafa2b",
+      "seat_numbers": [
+        "A6",
+        "A7"
+      ],
+      "total_amount": 26.5,
+      "payment_id": "pay_rzp_4gqeauk7bdv",
+      "order_id": "order_rzp_qvf7y7i9bn",
+      "status": "CONFIRMED",
+      "created_at": {
+        "$date": "2026-08-11T09:15:38.855000"
+      },
+      "_id": {
+        "$oid": "6a7ae83aceec5d008fdafa2c"
+      }
+    },
+    {
+      "booking_code": "CP-H3GZ64",
+      "user_id": "6a7ada814d2fcc956a92872d",
+      "show_id": "6a7ae827ceec5d008fdafa2b",
+      "seat_numbers": [
+        "A8",
+        "A10"
+      ],
+      "total_amount": 26.5,
+      "payment_id": "pay_rzp_3jwsfaprc02",
+      "order_id": "order_rzp_o3oyzjgoci",
+      "status": "CONFIRMED",
+      "created_at": {
+        "$date": "2026-08-11T09:18:26.772000"
+      },
+      "_id": {
+        "$oid": "6a7ae8e2ceec5d008fdafa2d"
+      }
+    }
+  ]
+}

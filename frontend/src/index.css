@@ -68,7 +68,7 @@ h1, h2, h3, h4, h5, h6 {
   filter: blur(80px);
   -webkit-filter: blur(80px);
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
   opacity: 0.85;
   animation: pulseGlow 10s ease-in-out infinite alternate;
 }
@@ -118,9 +118,7 @@ h1, h2, h3, h4, h5, h6 {
 .card-glass {
   position: relative;
   z-index: 1;
-  background: rgba(15, 23, 42, 0.55);
-  backdrop-filter: blur(28px);
-  -webkit-backdrop-filter: blur(28px);
+  background: #0f172a;
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-md);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
@@ -229,10 +227,11 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-muted);
 }
 
+.input-field,
 .form-input {
   width: 100%;
   padding: 0.8rem 1rem;
-  background: rgba(15, 23, 42, 0.85);
+  background: #0f172a;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   color: var(--text-main);
@@ -242,6 +241,7 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.2s ease;
 }
 
+.input-field:focus,
 .form-input:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px var(--primary-glow);
@@ -258,4 +258,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .page-section {
   padding: 3rem 0;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
