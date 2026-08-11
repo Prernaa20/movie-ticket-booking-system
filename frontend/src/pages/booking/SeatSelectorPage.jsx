@@ -95,8 +95,14 @@ const SeatSelectorPage = () => {
 
       const orderData = orderRes.data;
 
-      // Step B: Trigger Official Razorpay SDK Popup if available in window
-      if (window.Razorpay) {
+      // Step B: Trigger Official Razorpay SDK Popup if real merchant keys are present
+      const isRealMerchantKey = orderData.key_id && 
+                                orderData.key_id.startsWith('rzp_') && 
+                                !orderData.key_id.toLowerCase().includes('demo') &&
+                                orderData.order_id.startsWith('order_') &&
+                                !orderData.order_id.includes('rzp_');
+
+      if (window.Razorpay && isRealMerchantKey) {
         const options = {
           key: orderData.key_id,
           amount: orderData.amount,
@@ -134,7 +140,7 @@ const SeatSelectorPage = () => {
         rzp.open();
         setSubmitting(false);
       } else {
-        // Fallback to custom interactive payment modal
+        // Fallback to interactive test payment simulator
         setShowRazorpayModal(true);
         setSubmitting(false);
       }
